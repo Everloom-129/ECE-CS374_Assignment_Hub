@@ -12,7 +12,7 @@
 
 ## T1: Derive Time complexity
 
-![image-20230228124042088](C:\Users\everloom\AppData\Roaming\Typora\typora-user-images\image-20230228124042088.png)
+![image-20230301210403098](ECE374_Assignment_4_P1.assets/image-20230301210403098.png)
 
 ## Solution:
 
@@ -56,27 +56,29 @@ Therefore, the induction step holds, and the solution $A(n) = n^2 + 2n$ is verif
 To solve this recurrence relation, we can also use the method of iteration.
 $$
 B(n) = B(n-1) + n(n-1) - 1 \\
-= B(n-2) + (n-1)(n-2) - 1 + n(n-1) - 1 \\
-= B(n-2) + (n^2 - 3n + 3)\\
-= B(n-3) + (n-2)(n-3) - 1 + (n^2 - 3n + 3) = B(n-3) + (n^2 - 5n + 7)\\
+= B(n-2) + (n-1)(n-2) - 1 + n(n-1) - 1 
+= B(n-2) + 2(n - 1)^2 - 2\\
+= B(n-3) + (n-2)(n-3) - 1 +2(n - 1)^2 - 2 = B(n-3) + 3(n-1)(n-2)  - 3 \\
 = ...\\
-= B(0) + Σ(i=1 to n) i(i-1) - 1
+= B(0) +  \sum_{i=1}^{n} ((n-i)(n-i+1) -1) = 0 + n^2 +n - 2n (\sum_{i=1}^{n}i  )+\sum_{i=1}^{n}(i^2-i) -n
 $$
 
 
 Now, we use the formula for the sum of the first n squares:
 
-1^2 + 2^2 + ... + n^2 = n(n+1)(2n+1)/6
+$1^2 + 2^2 + ... + n^2 = n(n+1)(2n+1)/6$
 
 And the formula for the sum of the first n natural numbers:
 
-1 + 2 + ... + n = n(n+1)/2
+$1 + 2 + ... + n = n(n+1)/2$
 
 Substituting these into the expression above, we get:
 
-B(n) = 0 + [n(n-1)(2n-1)/6 - 1] = (n^3 - 3n + 2)/3
+$B(n) = n^2 + n - n^2 (n+1) + [n(n+1)(2n+1)/6 - n(n+1)/2] -n= 2/3 *n (1-n^2) -n$
 
-Therefore, the exact solution to the recurrence relation B(n) = B(n-1) + n(n-1) - 1, with B(0) = 0, is B(n) = (n^3 - 3n + 2)/3.
+Therefore, the exact solution to the recurrence relation 
+
+$B(n) = B(n-1) + n(n-1) - 1$, with B(0) = 0, is $ B(n) = 2/3 *n (1-n^2) -n $
 
 To justify this solution, we can also use mathematical induction.
 
@@ -92,7 +94,33 @@ Therefore, the induction step holds, and the solution B(n) = (n^3 - 3n + 2)/3 is
 
 #### (c) C(n) = C(n/2) + C(n/3) + C(n/6) + n, find the bigO notation complexity
 
+We can solve this by visualizing the recursion tree:
 
+![image-20230301222742057](ECE374_Assignment_4_P1.assets/image-20230301222742057.png)
+
+The work are every level of the recursion tree, staying the same. Therefore, the total work done is determined by both the depth and work in each layer. 
+
+Here, the depth k is determined by "smallest leaf", i.e. when leave shrink to constant value, we have 
+
+$k = \log_{6} n \rightarrow O(\log n)$
+
+Intuitively, we conclude that the asymptotic bound of the C(n) is equal to the work sum up together, i.e.
+
+$C(n) = O(n*\log n)$
 
 #### (d) D(n) = D(n/2) + D(n/3) + D(n/6) + n^2
+
+We can solve this by visualizing the recursion tree:
+
+![image-20230301223019657](ECE374_Assignment_4_P1.assets/image-20230301223019657.png)
+
+The work are every level of the recursion tree, staying the same. Therefore, the total work done is determined by both the depth and work in each layer. 
+
+Here, the depth k is determined by "smallest leaf", i.e. when leave shrink to constant value, we have 
+
+$k = \log_{6} n^2 \rightarrow O(\log n^2) = O(2 *\log n) = O(\log n)$
+
+Intuitively, we conclude that the asymptotic bound of the D(n) is equal to the work sum up together, i.e.
+
+$D(n) = O(n^2*\log n)$
 
