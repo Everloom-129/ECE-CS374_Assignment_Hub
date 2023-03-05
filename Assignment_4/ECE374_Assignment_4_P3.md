@@ -12,7 +12,7 @@
 
 ## T3 
 
-
+![image-20230304220433453](./ECE374_Assignment_4_P3.assets/image-20230304220433453.png)
 
 ## a)
 
