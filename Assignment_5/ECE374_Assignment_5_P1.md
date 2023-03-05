@@ -113,7 +113,7 @@ and the solution $ B(n) = \frac{n^3-4n} {3}$ is verified for all nonnegative int
 
 We can solve this by visualizing the recursion tree:
 
-![image-20230304215159527](./ECE374_Assignment_4_P1.assets/image-20230304215159527.png)
+![image-20230301222742057](ECE374_Assignment_4_P1.assets/image-20230301222742057.png)
 
 The work are every level of the recursion tree, staying the same. Therefore, the total work done is determined by both the depth and work in each layer. 
 
@@ -131,7 +131,15 @@ $C(n) = O(n*\log n)$
 
 We can solve this by visualizing the recursion tree:
 
-![image-20230304215221133](./ECE374_Assignment_4_P1.assets/image-20230304215221133.png)
+![image-20230301223019657](ECE374_Assignment_4_P1.assets/image-20230301223019657.png)
 
-Because work of each level of the recursion tree decreases layer by layer, then the total work is dominant by first layer work, i.e. $D(n) = O(n^2)$
+The work are every level of the recursion tree, staying the same. Therefore, the total work done is determined by both the depth and work in each layer. 
+
+Here, the depth k is determined by "smallest leaf", i.e. when leave shrink to constant value, we have 
+
+$k = \log_{6} n^2 \rightarrow O(\log n^2) = O(2 *\log n) = O(\log n)$
+
+Intuitively, we conclude that the asymptotic bound of the D(n) is equal to the work sum up together, i.e.
+
+$D(n) = O(n^2*\log n)$
 
