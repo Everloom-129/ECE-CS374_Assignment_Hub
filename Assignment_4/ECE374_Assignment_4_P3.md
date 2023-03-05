@@ -10,64 +10,97 @@
 
 **Shitian Yang** 	**sy39**
 
-## T3 
+## T3 FifthSort
 
 ![image-20230304220433453](./ECE374_Assignment_4_P3.assets/image-20230304220433453.png)
 
-## a)
+### (a) Prove correctness
 
-1)when n <100, it will be sorted by brute force, it should be correct
+(1) **Base Case:** when n < 100, it will be sorted by brute force, it should be correct
 
-2)when n>=100, each recursion uses some parts of the A[n], so the number decreases (or say convergent) all the time, so one of the son recursion can reach the n<100 status.
+(2) **Recursive Case:** when n >= 100, each recursion uses some parts of the A[n], so the number decreases all the time, i.e, they are converging to the base case, reaching n < 100 status.
 
-let us use a list to represent each k numbers in A:[unknown,unknown,unknown,unknown,unknown]
+We divide A into 5 packets, each length is k, representing with the following array:
 
-The AF or AS mean the list after the sort.
+***U = [unknown,unknown,unknown,unknown,unknown]***
 
-after "first sort":
+The ***AFTER_i*** mean the list after the **ith** sort.
 
-[smallest k number in A[0:3k],middle k numbers,largest k numbers in A[0:3k],unknown,unknown]=AF
+- **After "first sort":**
 
-after "second sort": 
+**AFTER_1 = **
 
-[smallest k number in AF[0:3k], middle k numbers, smallest k number in AF[2k+1:n],middle k numbers,largest k numbers in all]=AS
+***[smallest k number in A[0:3k], middle k numbers,largest k numbers in A[0:3k],unknown,unknown]***
 
-after "third sort":
+- **After "second sort":** 
 
-[smallest k number in all,middle k numbers,middle k numbers,middle k numbers,largest k numbers in all]
+**AFTER_2 = **
 
-after "fourth sort": it sorts the middle k numbers in the list, because it has got the smallest and largest k numbers in n.
+***[smallest k number in AFTER_1[0:3k], middle k numbers, smallest k number in AFTER_1[2k+1:n],middle k numbers,largest k numbers in all]***
 
-## b)
+- **After "third sort":**
+
+**AFTER_3 =** 
+
+***[smallest k number in all,middle k numbers,middle k numbers,middle k numbers,largest k numbers in all]***
+
+- **After "fourth sort":**
+
+   it sorts the middle k numbers in the list, because it has got the smallest and largest k numbers in n.
+
+AFTER_4 = ***[Sorted Array A ]***  
+
+
+
+### b) Base case = [1,10)
 
 No. When n=11, it will trigger the else statement. So k=3, but in the fourth sort, 4*k=12, which overflow and will cause an error. 
 
 
 
-## c)
+### c) Base case = [1,13)
 
-Yes, because the n<? only affect the biggest size we need to use brute force. But we need to pay attention to the overflow due to the ceil(n/5) and the fourth sort's 4k, which means 4k should smalled than n. 
+Yes, because the n<? only affect the biggest size we need to use brute force. But we need to pay attention to the overflow due to the ceil(n/5) and the fourth sort's 4k, which means 4k should smaller than n. 
 
-Assume that n=5m+l (0<=l<=4), so 4k = 4 ceil(n/5)= 4m+4=<n=5m+l <=> 4<=m+l
+Assume that
 
-1) if n=13: m=2,l=3, m+l>4
-2) if n=14: m=2,l=4, m+l>4
-3) if n=15: because it is the multiple of 5, so the ceil function will not trigger +1. k=3 => 4k=12<15, it is acceptable.
-4) if n>16: so m+l>=m=4, so it is acceptable.
+ $$ n=5m+l \ \ (0 < l \le 4),\\ \therefore 4k = 4 *ceil(n/5)= 4m+4 \le n=5m+l \Leftrightarrow 4 \le m+l $$
+
+1. if  $  n=13: m=2,l=3, m+l>4 $
+
+2. if $ n=14: m=2,l=4, m+l>4 $
+
+3. if $n=15$: 
+
+   because it is the multiple of 5, 
+
+   so the ceil function will not trigger +1. $k=3 \Rightarrow 4k=12<15$, it is acceptable.
+
+4. if $n>16$: so $m+l \ge m=4,$ so it is acceptable.
 
 
 
-## d)
+### d) Ceil => Floor ?
 
-No. assume that there are 104 number, and the largest 24 numbers in A[1,24]. after first sort, they are in A[37,60]. after second sort, they are splitted, in A[37,40] and A[85,104]. And the  A[37,40] will not have chance to be in the right place( A[81,84]), because the rest sort are sort the number from A[1] to A[80].
+No.
 
+Assume that there are 104 number, and the largest 24 numbers in A[1,24]. 
 
+- After first sort, they are in A[37,60]. 
+- After second sort, they are split into A[37,40] and A[85,104]. And the  A[37,40] will not have chance to be in the right place( A[81,84]), because the rest sort are sort the number from A[1] to A[80].
 
-## e)
+### e) Running Time Analysis
 
-T(n)=4*T($\frac{3n}{5}$) +O(1)
+$T(n)=4*T(\frac{3n}{5}) +O(1)$
 
-If we use master theory, so a=4,b=5/3, a>b
+If we use **master theory**, so $a=4,b=5/3, a>b$
 
-So the complexity is $O(n^{\frac{\lg(4)}{\lg(\frac{5}{3})}})\approx O(n^{2.7138})$
+![image-20230304223441212](./ECE374_Assignment_4_P3.assets/image-20230304223441212.png)
 
+So the complexity is 
+
+$O(n^{log_{b}{a}}) = O(n^{log_{5/3}{4}}) = O(n^{\frac{\lg(4)}{\lg(\frac{5}{3})}})\approx O(n^{2.7138})$
+
+> Reference: [Advanced master theorem for divide and conquer recurrences - GeeksforGeeks](https://www.geeksforgeeks.org/advanced-master-theorem-for-divide-and-conquer-recurrences/)
+>
+> ![image-20230304223742689](./ECE374_Assignment_4_P3.assets/image-20230304223742689.png)
