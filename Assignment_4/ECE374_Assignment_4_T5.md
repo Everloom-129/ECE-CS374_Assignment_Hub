@@ -28,7 +28,7 @@ The following is our algorithm on how to find the duplicate value.
 #include<stdio.h>
 #include <math.h>
 bool ContainRepetition(A[1..n]){ 
-    x[4] = [nan,0,0,0]; // leave first as nan, start from 1
+    int x[4] = [nan,0,0,0]; // leave first as nan, start from 1
 	x[1] = Select(A,ceil(n/4));  // O(n)
 	x[2] = Select(A,ceil(2*n/4));// O(n)
 	x[3] = Select(A,ceil(3*n/4));// O(n)
@@ -42,7 +42,7 @@ bool ContainRepetition(A[1..n]){
         if(count > n/4){
             return true;
         }
-    }// If all Xi don't duplicate, there is no repetition
+    }// If all x[i] don't duplicate, there is no repetition
     return false;  
 ````
 
