@@ -10,54 +10,75 @@
 
 *Shitian Yang     sy39*
 
-## T4: Contiguous sums:
+## T4: Contiguous sums -- ***Kadane’s algorithm***
 
 ![image-20230318194822575](./ECE374_Assignment_5_P4.assets/image-20230318194822575.png)
 
-## Solution:
+## Solution: 
 
 #### (a) Linear case
 
-- Intuition
+- **Intuition**: The idea is to maintain a variable ***max_so_far*** that stores the largest sum of current read run through the array. 
+- **Edge case**: Similar to ***LIS***, this algorithm can be realized in ***O(n)*** time, because it will end after reading the whole array. 
+- **Inductive formula**: described in following algorithm:
 
-- Edge case
-
-- space complexity analysis (DP table size, n*m?)
-
-- appear where
-
-- formula
-
-
-
-
-
-In order to realize an ***O(n)*** level decision algorithm, we can't sort the array, for it takes at least ***O(nlogn)*** complexity. 
-
-However, since we don't need to specify the repeated value, we can use ***Select(A[1..n], j)*** algorithm we learnt on the course to minimize the time complexity. 
-
-> ***Select(A[1..n], j):*** return the jth smallest value in an arbitrary array A, worst-case time complexity is ***O(n)**
-
-The following is our algorithm on 
-
-````c++
-#include<iostream>
-
-vector<int> LinearContiguousSum(A[1..n]){ 
-   
-    return false;  
+````python
+def LinearContiguousSum(A[1..n]):
+    max_so_far = max_ending_here = A[1]
+    for i in range(1, len(A)):
+        max_ending_here = max_ending_here + a[i] # Tmp value for updating
+        if (max_so_far < max_ending_here):
+            max_so_far = max_ending_here
+ 
+        if max_ending_here < 0: # Avoid the negative updated value
+            max_ending_here = 0
+    return max_so_far
 ````
 
-The ***Select*** function works as the role of "sorting", as the following diagram shows, if the repetition value exists, it will cover at least one of the there "semi points" in the sorted array. So, we just need to go through the array 3 times, judging whether there exist repetition on the 3 semi points. 
+**Time Complexity:** O(N)
+**Auxiliary Space:** O(1)
 
 #### (b) Circular case 
 
-The following is our algorithm on 
+To handle the circular case, we need to consider two situations:
 
-````c++
-#include<iostream>
+1. **The maximum sum is entirely within the non-circular array.**
 
-vector<int> CircularContiguousSum(A[1..n]){ 
+   In this case, we can simply use the above algorithm to find the maximum contiguous sum for the non-circular array.
+
+2. **The maximum sum wraps around the circular array.**
+
+   In this case, we can invert the sign of each element in the array and apply the above algorithm to find the minimum contiguous sum for the non-circular array. We can then subtract the minimum contiguous sum from the sum of all elements in the array to get the maximum contiguous sum for the circular array.
+
+   ```python
+    def LinearContiguousSum(A[1..n]):
+       # Situation One
+       max_so_far = max_ending_here = A[1]
+       for i in range(1, len(A)):
+           max_ending_here = max_ending_here + a[i] # Tmp value for updating
+           if (max_so_far < max_ending_here):
+               max_so_far = max_ending_here
+    
+           if max_ending_here < 0: # Avoid the negative updated value
+               max_ending_here = 0
+       non_circular_max = max_so_far  
+       # Situation Two
+       total_sum = sum(A)
+       for i in range(len(A)):
+           A[i] = -A[i]  # invert sign of each element
+       max_so_far = max_ending_here = A[1] # Reset initial value
+    
+       for i in range(1, len(A)):
+           max_ending_here = max(A[i], max_ending_here + A[i])
+           max_so_far = max(max_so_far, max_ending_here)
+       circular_max = total_sum + max_so_far
+       
+       # return maximum of non-circular and circular max
+       return max(non_circular_max, circular_max)
+   ```
+
    
-    return false;  
-````
+
+### Reference:
+
+> [Largest Sum Contiguous Subarray (Kadane's Algorithm) - GeeksforGeeks](https://www.geeksforgeeks.org/largest-sum-contiguous-subarray/)

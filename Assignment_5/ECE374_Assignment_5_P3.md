@@ -31,27 +31,27 @@ The solution we want is the **dic_route[n] [m]** and the **dic_min[n] [m]** whic
 **dic_min[i] [j]**=$\cases{dic\_value[1][1]&if i=j=1 \# first element\\ dic\_min[i-1][j]+dic\_value[i][j]&if j=1 \#first row\\ dic\_min[i][j-1]+dic\_value[i][j]&if i=1 \#first col \\  dic\_min[i-1][j]+dic\_value[i][j]&if dic\_min[i-1][j]<dic\_min[i][j-1] \#inherit from left one \\  dic\_min[i][j-1]+dic\_value[i][j]&if dic\_min[i-1][j]>dic\_min[i][j-1] \#inherit from upper one}$ 
 
 ```python
-
-def min_route(dic_value,n,m):
+# Our algorithm
+def min_route(dic_value,n,m)：
 	dic_min={}
 	dic_route={}
-	for i=1 to n:
-		for j =1 to m:
-			if  i=j=1:
-				dic_min[i] [j]=dic_value[i] [j]
-				dic_route[i] [j]=[(1,1)]
-			if  i=1:
-				dic_min[i] [j]=dic_min[i] [j-1] + dic_value[i] [j]
-				dic_route[i] [j]=dic_route[i] [j-1] + [(i,j)]	
-			if  j=1:
-				dic_min[i] [j]=dic_min[i-1] [j] + dic_value[i] [j]
-				dic_route[i] [j]=dic_route[i-1] [j] + [(i,j)]	
-			if  dic\_min[i-1] [j]<dic\_min[i] [j-1]:
-				dic_min[i] [j]=dic_min[i-1] [j] + dic_value[i] [j]
-				dic_route[i] [j]=dic_route[i-1] [j] + [(i,j)]	
+	for i = 1 to n:
+		for j = 1 to m:
+			if  i = j = 1:
+				dic_min[i][j] = dic_value[i][j]
+				dic_route[i][j] = [(1,1)]
+			if  i = 1:
+				dic_min[i][j]   = dic_min[i][j-1] + dic_value[i][j]
+				dic_route[i][j] = dic_route[i][j-1] + [(i,j)]	
+			if  j = 1:
+				dic_min[i][j]   = dic_min[i-1] [j] + dic_value[i] [j]
+				dic_route[i][j] = dic_route[i-1] [j] + [(i,j)]	
+			if  dic_min[i-1][j] < dic_min[i][j-1]:
+				dic_min[i][j]   = dic_min[i-1][j] + dic_value[i][j]
+				dic_route[i][j] = dic_route[i-1][j] + [(i,j)]	
 			else:
-				dic_min[i] [j]=dic_min[i] [j-1] + dic_value[i] [j]
-				dic_route[i] [j]=dic_route[i] [j-1] + [(i,j)]	
+				dic_min[i][j]   = dic_min[i][j-1] + dic_value[i][j]
+				dic_route[i][j] = dic_route[i][j-1] + [(i,j)]	
 	return dic_route[n][m]
 ```
 
