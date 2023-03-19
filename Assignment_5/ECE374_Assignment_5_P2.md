@@ -10,7 +10,7 @@
 
 *Shitian Yang     sy39*
 
-## T1: Derive Time complexity
+## P2: Different LIS approach
 
 ![image-20230318194611511](./ECE374_Assignment_5_P2.assets/image-20230318194611511.png)
 
@@ -22,3 +22,10 @@ The $LIS_{LAB} $ is the back trace version of $LIS_{LEC}$,
 
 -  $LIS_{LEC}$: counting from the last to front
 -  $LIS_{LAB} $: counting from the front to last
+
+三段论：
+Lec 写法
+
+Lab 写法
+
+差别，深远含义

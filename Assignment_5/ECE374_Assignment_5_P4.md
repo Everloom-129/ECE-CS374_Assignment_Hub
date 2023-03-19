@@ -18,6 +18,20 @@
 
 #### (a) Linear case
 
+- Intuition
+
+- Edge case
+
+- space complexity analysis (DP table size, n*m?)
+
+- appear where
+
+- formula
+
+
+
+
+
 In order to realize an ***O(n)*** level decision algorithm, we can't sort the array, for it takes at least ***O(nlogn)*** complexity. 
 
 However, since we don't need to specify the repeated value, we can use ***Select(A[1..n], j)*** algorithm we learnt on the course to minimize the time complexity. 
