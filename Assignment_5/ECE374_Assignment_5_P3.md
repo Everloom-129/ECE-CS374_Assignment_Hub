@@ -14,13 +14,19 @@
 
 ![image-20230318201917474](ECE374_Assignment_5_P3.assets/image-20230318201917474.png)
 
+Example: For the following 3*3 grid, path is $\{(1,1),(2,1),(2,2),(2,3),(3,3)\}$
+
 | Grid  | 1    | 2    | 3    |
 | ----- | ---- | ---- | ---- |
 | **1** | 0    | 23   | 3    |
 | **2** | 4    | 1    | 2    |
 | **3** | 34   | 22   | 10   |
 
-There is a dictionary **dic_value** contains all the non-negative numbers in n*m grid. And create **dic_route**(list) and **dic_min** to storage the min route to reach and the min value to reach to this element. We will calculate the whole grid from up to down, from left to right, and each element will inherit the smaller one from its upper or left element. 
+
+
+There is a dictionary **dic_value** contains all the non-negative numbers in n*m grid. 
+
+And create **dic_route**(list) and **dic_min** to storage the min route to reach and the min value to reach to this element. We will calculate the whole grid from up to down, from left to right, and each element will inherit the smaller one from its upper or left element. 
 
 We initial the **dic_min[1] [1]** as **dic_value[1] [1]** and **dic_route[1] [1]** as **(1,1)**. The first row will only inherit its left element, the first col will only inherit its right element. 
 
