@@ -65,10 +65,10 @@ Here's the pseudocode for the algorithm:
 ```python
 def DAG_evaluate(DAG_t dag):
     
-    value_table = {} # a hash table to store values of subexpressions
+    value_table = {}      # a hash table to store values of subexpressions
     topo_order = topologicalSort(dag) # Use algorithm we learned on course
     value_table[topo_order.root] = None # initialize outcome as None
-    
+    # todo from right to left 
     for node in topo_order:
         if node.left == None and node.right == None: # node is a leaf 
         	value_table[node] = node.value # leaf must be operand
