@@ -1,6 +1,6 @@
 # ECE374 Assignment 6
 
-03/23/2023
+23/03/2023
 
 ***Group & netid***
 
@@ -10,34 +10,32 @@
 
 **Shitian Yang** 	**sy39**
 
-## T3 Chess Championship
+## T3
 
 ![image-20230323212527690](./ECE374_Assignment_6_P3.assets/image-20230323212527690.png)
 
-### a)  Recurrence Relationship
+### a)
 
-Intuition: 
+To solve this problem, we need to calculate the probability of the each game win k score. And at the end, we just sum all the probability that in gth that win equal or more than i scores.
 
-HMI 模型 ，arlpb
+So we create a grid by using round as row and score as col. Each element, for example (g round,i score), will inherit from its previous round's 3 elements: (g-1 round,i-1 score), (g-1 round,i-0.5 score), (g-1 round,i score), because it can use "win, draw, loss" to earn "1,0.5,0" score from previous round.
 
-第N场比赛，每个人分数的情况
-
-会受前一场比赛影响
-
-expectation matrix 统计
+Because we need to consider the black and white status, so we create a $p_{status}=[[ww,wd,wl],[bw,bd,bl]]$ to store the the champion's probability in taking white or black .
 
 
 
-To solve this problem, we need to calculate the probability of the each game win k score. And at the end, we just sum all the probability that in gth that win equal or more than i scores
-
-Because we need to consider the black and white status, so we create a $p_{status}=[[ww,wd,wl],[bw,bd,bl]]$ to store the probability.
-
-The base case is:
+The base case is: 
 $$
-P[status][0][0]=p_{status}[status][2]
-\\P[status][0][1]=p_{status}[status][1]
-\\P[status][0][2]=p_{status}[status][0]
+P[status][1][0]=p_{status}[status][2]
+\\P[status][1][0.5]=p_{status}[status][1]
+\\P[status][1][1]=p_{status}[status][0]
+\\P[status][1][others]=0
 $$
+
+The meaning of **P** is $P[white ~~or~~ black][round][score*2]$, status is 0 or 1. 0 represents white, 1 represent black. The base case represent the probability situation after the first game.
+
+
+
 
 
 The recurrence is:
@@ -45,27 +43,24 @@ $$
 \begin{aligned}
 P[status][g][i]&= p_{status}[!status][0]*P[!status][g-1][i-1]
 \\&~~~~+p_{status}[!status][1]*P[!status][g-1][i-0.5]
-\\&~~~~+p_{status}[!status][2]*P[!status][g-1][i+0]
+\\&~~~~+p_{status}[!status][2]*P[!status][g-1][i]
 \end{aligned}
 $$
-**status is 0 or 1. 0 represents white, 1 represent black.**
-
-So the probability that the champion retains the title is 
-$$
-P_{retain} = \sum_{k=i}^{i_{max}}P[final\_status][g][k]
-$$
+This represent it inherits from its previous round's 3 elements. We use "!" mark to change the black and white status.
 
 
-### b) Dynamic Programming Algorithm
+
+So the probability  that the champion retains the title is $\sum_{k=i}^{i_{max}}P[final\_status][g][k]$
+
+### b)
 
 ```python
-import numpy as np
 def findp(ww,wd,wl,bw,bd,bl):
-    #create probability status list for white and black
+    #create p for white and black
     p_status=[[ww,wd,wl],[bw,bd,bl]]
     
     #create a all 0s grid. row represent g, col represent score
-    P= np.zeros([24,49]) #24 rows, 48 cols. each col represent 0.5 score
+    P=np.zeros([24,49]) #24 rows, 49 cols. each col represent 0.5 score from 0 to 24 scores
     color_flag=0 #white
     
     #base case
@@ -88,21 +83,12 @@ def findp(ww,wd,wl,bw,bd,bl):
             #loss
             P[row][col]+=p_status[color_flag][2]*P[row-1][col]
             
-    return sum(P[24][24:])
+    return sum(P[23][24:])
    
 ```
 
 
 
-### c) Running Time Analysis
+### c)
 
-Because we need to win more than [n/2] score to retains the title, 
-
-we need to create a n*(2n+1) grid. And we need to traverse this grid in $O(n (2n+1)) $
-
-And we need to calculate for each element, and the other operation is constant time.
-
-Therefore, the overall time complexity is $O(n^2)$
-
-
-
+Because we need to win more than [n/2] score to retains the title, we need to create a n*(2n+1) grid. And we need to calculate for each element, and the other operation is constant time. So it is **O(n^2)**

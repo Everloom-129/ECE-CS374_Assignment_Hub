@@ -12,7 +12,9 @@
 
 ## T4
 
- For this problem, we just need to use deep first tree to find a reachable path. Because we just need to find one path is enough, and this path does not need to be the shortest one.
+![4](./ECE374_Assignment_6_P4.assets/4.png) 
+
+For this problem, we just need to use deep first tree to find a reachable path. Because we just need to find one path is enough, and this path does not need to be the shortest one.
 
 
 
