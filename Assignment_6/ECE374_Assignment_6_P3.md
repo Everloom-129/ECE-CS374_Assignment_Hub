@@ -10,17 +10,29 @@
 
 **Shitian Yang** 	**sy39**
 
-## T3
+## T3 Chess Champion 
 
 ![image-20230323212527690](./ECE374_Assignment_6_P3.assets/image-20230323212527690.png)
 
-### a)
+### a) **Recurrence Relationship**
 
-To solve this problem, we need to calculate the probability of the each game win k score. And at the end, we just sum all the probability that in gth that win equal or more than i scores.
+To solve this problem, we need to calculate the **likelihood** of the each game win k score. 
 
-So we create a grid by using round as row and score as col. Each element, for example (g round,i score), will inherit from its previous round's 3 elements: (g-1 round,i-1 score), (g-1 round,i-0.5 score), (g-1 round,i score), because it can use "win, draw, loss" to earn "1,0.5,0" score from previous round.
+And at the end, we just sum all the probability that in gth that win equal or more than i scores.
 
-Because we need to consider the black and white status, so we create a $p_{status}=[[ww,wd,wl],[bw,bd,bl]]$ to store the the champion's probability in taking white or black .
+So we create a grid by using round as row and score as col. 
+
+Each element, for example (g round,i score), will inherit from its previous round's 3 elements:
+
+``` C
+(g-1 round,i-1 score), (g-1 round,i-0.5 score), (g-1 round,i score)
+```
+
+Then we represent **"win, draw, loss"**  with "**1, 0.5 ,0**" score based on previous round.
+
+To consider the black and white status, we create a probability list
+
+$p_{status}=[[ww,wd,wl],[bw,bd,bl]]$ to store the the champion's probability of playing white or black .
 
 
 
@@ -32,7 +44,7 @@ P[status][1][0]=p_{status}[status][2]
 \\P[status][1][others]=0
 $$
 
-The meaning of **P** is $P[white ~~or~~ black][round][score*2]$, status is 0 or 1. 0 represents white, 1 represent black. The base case represent the probability situation after the first game.
+The meaning of **P** is $P[white ~~or~~ black][round][score]$, status is 0 or 1. 0 represents white, 1 represent black. The base case represent the probability situation after the first game.
 
 
 
@@ -52,7 +64,9 @@ This represent it inherits from its previous round's 3 elements. We use "!" mark
 
 So the probability  that the champion retains the title is $\sum_{k=i}^{i_{max}}P[final\_status][g][k]$
 
-### b)
+### b)**Dynamic Programming Algorithm**
+
+Based on the intuition in (a), we designed the following DP algorithm compute the likelihood. 
 
 ```python
 def findp(ww,wd,wl,bw,bd,bl):
@@ -89,6 +103,12 @@ def findp(ww,wd,wl,bw,bd,bl):
 
 
 
-### c)
+### c) **Running Time Analysis**
 
-Because we need to win more than [n/2] score to retains the title, we need to create a n*(2n+1) grid. And we need to calculate for each element, and the other operation is constant time. So it is **O(n^2)**
+Because we need to win more than [n/2] score to retains the title, 
+
+we need to create a n*(2n+1) grid. And we need to traverse this grid in $O(n (2n+1)) $
+
+And we need to calculate for each element, and the other operation is constant time.
+
+Therefore, the overall time complexity is $O(n^2)$
