@@ -14,6 +14,16 @@
 
 ![4](./ECE374_Assignment_6_P4.assets/4.png) 
 
+### Solution:
+
+- The poles can be treat as a graph with n vertexes, if the **Euclidean distance** between two arbitrary poles A, B = 
+  $$
+  dist_{A\leftrightarrow B} = \sqrt{(x_a-x_b)^2 +(y_a-y_b)^2} \in [d,2d]
+  $$
+  then we say A, B is connected. 
+
+  
+
 For this problem, we just need to use deep first tree to find a reachable path. Because we just need to find one path is enough, and this path does not need to be the shortest one.
 
 
@@ -49,6 +59,7 @@ def help_recurrence_function(pfrom,pto,plist,d,path):
         #no path is available from pfrom to pto, return None
         return None
                     
+#Helper function:
 #judge whether p2 is a appropriate next point to p1 by d    
 def OK_distance(p1,p2,d):
     #input:p1,p2 are triple like (x,y), d is the distance required
