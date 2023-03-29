@@ -10,23 +10,25 @@
 
 **Shitian Yang** 	**sy39**
 
-## T4
+## T4 Kung Fu Run!
 
 ![4](./ECE374_Assignment_6_P4.assets/4.png) 
 
 ### Solution:
 
-- The poles can be treat as a graph with n vertexes, if the **Euclidean distance** between two arbitrary poles A, B = 
+#### Intuition
+
+- The Kung Fu game can be treat as a graph with n vertexes represented by poles, if the **Euclidean distance** between two arbitrary poles A, B = 
   $$
   dist_{A\leftrightarrow B} = \sqrt{(x_a-x_b)^2 +(y_a-y_b)^2} \in [d,2d]
   $$
-  then we say A, B is connected. 
+  then we say A, B is connected. And the number of edges are m. 
 
-  
+- Then the problem is turned to be finding the reachable path from vertex *ps to pt*
 
 For this problem, we just need to use deep first tree to find a reachable path. Because we just need to find one path is enough, and this path does not need to be the shortest one.
 
-
+#### Algorithm
 
 ```python
 #find a reachable path form ps to pt
@@ -73,5 +75,9 @@ def OK_distance(p1,p2,d):
         return 0
 ```
 
+#### Complexity Analysis
 
+Since we apply DFS to the graph, the time complexity is ***O(n+m)*** for our 
+
+**n vertexes, m edges graph. **
 

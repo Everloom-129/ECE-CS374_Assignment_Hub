@@ -56,9 +56,11 @@ Since each node is visited exactly once, the time complexity of the algorithm is
 
 To evaluate an arithmetic expression given as a DAG, we can use a modified version of the algorithm for the tree case. 
 
-The key idea is to apply **topological sort** on DAG, which provides a linear order of the nodes such that if node **u->v**, there is no path **v->u**. Then we can just apply the **Tree_evaluate** function we defined in (a). 
+The key idea is to apply **topological sort** on DAG, which provides a linear order of the nodes such that if node **u->v**, there is no path **v->u**. Then we can just apply the same idea of **Tree_evaluate** function we defined in (a). 
 
-Meanwhile, to avoid redundant computations, we store values of the subexpressions that we have already evaluated in a hash table. Whenever we encounter a node that represents a subexpression that we have already evaluated, we simply look up the value in the hash table instead of computing it again (*Dynamic Programming*).
+Meanwhile, to **avoid redundant computations,** we store values of the subexpressions that we have already evaluated in a **hash table.** Whenever we encounter a node that represents a subexpression that we have already evaluated, we simply look up the value in the hash table instead of computing it again (*Dynamic Programming*).
+
+Finally, we deal the DAG with DFS, calculating the outcome of each leaf node first and combine them together for upper operator case. 
 
 Here's the pseudocode for the algorithm:
 
@@ -68,18 +70,16 @@ def DAG_evaluate(DAG_t dag):
     value_table = {}      # a hash table to store values of subexpressions
     topo_order = topologicalSort(dag) # Use algorithm we learned on course
     value_table[topo_order.root] = None # initialize outcome as None
-    # todo from right to left 
-    for node in topo_order:
-        if node.left == None and node.right == None: # node is a leaf 
+    # After topological sort, every child node is right of father node
+    # So we just need to compute from leaf to root
+    Loop node from topo_order.right to left:
+        if node is a leaf:
         	value_table[node] = node.value # leaf must be operand
     	else: # recursively traverse 
         	if node in value_table: # skip stored subexpressions
             	continue  
-            left_child, right_child = DAG_t[node]
-            if left_child not in value_table:
-                continue  # left child not evaluated yet, skip
-            if right_child not in value_table:
-                continue  # right child not evaluated yet, skip
+            left_child, right_child = dag[node].left, dag[node].right
+            # Based on topological sort outcome
             left_value  = value_table[left_child]
             right_value = value_table[right_child]
           	
