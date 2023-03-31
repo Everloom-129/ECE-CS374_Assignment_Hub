@@ -12,7 +12,7 @@
 
 ## T5 k-length-path
 
-![image-20230330212921555](./ECE374_Assignment_7_p5.assets/image-20230330212921555.png)
+![image-20230330212921555](./ECE374_Assignment_7_P5.assets/image-20230330212921555.png)
 ### Solution
 #### (a) at most k case
 
@@ -61,7 +61,7 @@ Because we use n to initial and k*m in the loop. So it is **O(n+k * m)** which i
 
 #### (b) Exactly k case
 
-![image-20230331102043593](./ECE374_Assignment_7_p5.assets/image-20230331102043593.png)
+![image-20230331102043593](./ECE374_Assignment_7_P5.assets/image-20230331102043593.png)
 
 In this case, we do not care about the weight of each edge. So we can use modified dfs to search the k-path node. We allow the algorithm to go back, and just limit the number of paths it passed by decrease the k in each recursion. So it will only run k times and make sure the ending point is t, or it will return nothing.
 
