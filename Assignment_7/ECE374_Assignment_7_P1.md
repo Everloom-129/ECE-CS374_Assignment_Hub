@@ -25,11 +25,30 @@ To efficiently identify the order of the symbols in Σ using the given list D[n]
 3. Create a directed edge in the graph G from the differing character in the first word to the differing character in the second word. This edge indicates that the first character comes before the second character in the lexicographic order.
 4. Perform a topological sort on the directed graph G. This will provide a linear ordering of the nodes in the graph, which corresponds to the lexicographic order of the characters in Σ.
 
+<img src="./ECE374_Assignment_7_P1.assets/image-20230402175135935.png" alt="image-20230402175135935" style="zoom:50%;" />
+
 #### Algorithm:
 
 ```python
-from collections import defaultdict, deque
-
+def find_lexicographic_order(alphabet, words):
+    G = create_graph(alphabet, words) # create a graph based on alphabet and words
+    visited = set()
+    sorted_chars = deque()
+    stack = Stack(G) # Construct a stack based on Graph
+ 
+	while stack is not None: # Toplogically traverse the whole vertex set
+        char = stack[-1]
+        if char not in visited:
+            visited.add(char)
+            for neighbor in G[char]:
+                if neighbor not in visited:
+                    stack.append(neighbor)
+        else:
+            stack.pop()
+            sorted_chars.appendleft(char)
+	ans_string = deque_to_string(sorted_chars)  # the question needs string format
+    return ans_string
+# Helper function
 def create_graph(alphabet, words):
     graph = {char: set() for char in alphabet}
     for i in range(len(words) - 1):
@@ -40,26 +59,6 @@ def create_graph(alphabet, words):
                 break
     return graph
 
-def topological_sort(graph):
-    visited = set()
-    sorted_chars = deque()
-    
-    def visit(char):
-        if char not in visited:
-            visited.add(char)
-            for neighbor in graph[char]:
-                visit(neighbor)
-            sorted_chars.appendleft(char)
-            
-    for char in graph:
-        visit(char)
-        
-    return ''.join(sorted_chars)
-
-def find_lexicographic_order(alphabet, words):
-    graph = create_graph(alphabet, words)
-    return topological_sort(graph)
-
 alphabet = {'Q', 'X', 'Z'}
 words = ['QQZ', 'QZZ', 'XQZ', 'XQX', 'XXX']
 order = find_lexicographic_order(alphabet, words)
@@ -67,15 +66,20 @@ print(order)
 
 ```
 
-#### Time Complexity
+#### Time Complexity: O(nk)
 
-Because
+- Creating Graph: **O(n*k) **  where n is the number of words and k is the length of each word
 
-graph + top
+- Topological Sort: **O(V+E)**, where V is the number of vertices in the graph (i.e., the number of distinct characters in the words) and E is the number of edges in the graph.
 
+  - The while loop in `find_lexicographic_order` executes once for each vertex in the graph, so the time complexity of the loop is O(V). 
 
+  - In each iteration of the loop, we iterate over the neighbors of the current vertex, which takes O(deg(v)) time, where deg(v) is the degree of vertex v (i.e., the number of neighbors of v). 
+  - The sum of the degrees of all vertices is equal to twice the number of edges in the graph, so the total time spent iterating over neighbors is O(E).
 
+ In practice, the toposort complexity may be dominated by the time spent in `create_graph` if the number of words and/or the maximum length of a word are very large.
 
+Total time complexity is within ***O(n\*k)***
 
 ### Reference
 
@@ -83,9 +87,4 @@ graph + top
 >
 > Also known as dictionary order, or alphabetical order, is a method of ordering a set of strings or sequences based on the order of individual elements within the sequences. This order is usually based on an underlying order of the elements' alphabet or set.
 >
-> 在英文字典中，排列单词的顺序是先按照第一个字母以升序排列（即a、b、c……z 的顺序）；如果第一个字母一样，那么比较第二个、第三个乃至后面的字母。如果比到最后两个单词不一样长（比如，sigh 和 sight），那么把短者排在前。
->
-> 通过这种方法，我们可以给本来不相关的单词强行规定出一个顺序。“单词”可以看作是“字母”的[字符串](https://zh.wikipedia.org/wiki/字符串)，而把这一点推而广之就可以认为是给对应位置元素所属集合分别相同的各个有序[多元组](https://zh.wikipedia.org/wiki/元组)规定顺序：下面用形式化的语言说明。
->
 > 2. Lab14
-> 3. 
