@@ -20,14 +20,14 @@
 
 To find the shortest path from a node s to a node t in a directed acyclic graph (DAG) with integer edge weights, we can apply topological sort on the DAG, then finding the path. 
 
-#### Intuition
+##### Intuition
 
 1. Perform a topological sort of the graph to obtain a linear ordering of its vertices.
 2. Initialize a dictionary or array dist to store the shortest distance from the source node s to all other nodes, and set the initial distance from s to itself as 0. Set the distance to all other nodes as infinity.
 3. Iterate through the nodes in the topologically sorted order. For each node, relax its outgoing edges by updating the distance to its neighbors if the new path is shorter than the previously known distance.
 4. Return the shortest distance from node s to node t.
 
-#### Python implementation
+##### Python implementation
 
 ```python
 from collections import defaultdict
@@ -63,11 +63,15 @@ def shortest_path(graph, weights, s, t):
 
 ```
 
+##### Time complexity
 
+- Topological Sort ***O(n + m)***
+- Dijkstra Algo ***O(m\*log(n))*** 
+- So the total Complexity is ***O(m\*log(n))*** 
 
 #### (b) Longest path search
 
-#### Intuition
+##### Intuition
 
 To find the longest path from a node s to a node t in a directed acyclic graph (DAG), we can simply modify the shortest path algorithm as follows:
 
@@ -83,8 +87,9 @@ def longest_path(graph, weights, s, t):
     return -1*shortest_path(graph, negated_weights, s, t)
 
 ```
+##### Time complexity
 
-
+***O(m\*log(n))*** 
 
 ### Appendix
 
