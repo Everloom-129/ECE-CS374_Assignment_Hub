@@ -38,7 +38,7 @@ At first, we need to initial all the **dic_min_path_value** to $\infin$ except t
 
    ​           dic_min_path[v] = dic_min_path[u]+[v]
 
-After k times, we return the **dic_min_path_value[e]** and **dic_min_path[e],** which means the min distance and min path from s to e.
+After k times, we return the **dic_min_path_value[t]** and **dic_min_path[t],** which means the min distance and min path from s to t.
 
 #### Algorithm
 
