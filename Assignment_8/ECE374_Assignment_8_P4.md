@@ -64,20 +64,11 @@ The Double SAT problem asks whether a given satisfiability problem has at least 
 
 #### Intuition:
 
+To prove the Double-SAT is NP-hard, we can reduce the **3-SAT problem** to it. 
 
-
-#### Reduction
-
-```python
-
-```
-
-#### Time complexity
-
-To show that Double-SAT is NP-hard, we can reduce the classic 3-SAT problem to it. 
-
-- 3-SAT problem
-  -  given a set of clauses (each a disjunction of exactly three literals), determine whether there exists a satisfying assignment of Boolean values to the variables.
+> 3-SAT problem
+>
+> given a set of clauses (each a disjunction of exactly three literals), determine whether there exists a satisfying assignment of Boolean values to the variables.
 
 Given an instance of 3-SAT with a set of clauses, we can construct an instance of Double-SAT as follows:
 
@@ -85,9 +76,11 @@ Given an instance of 3-SAT with a set of clauses, we can construct an instance o
 2. Add a new variable z to the Double-SAT instance.
 3. For each clause (x OR y OR w) in the 3-SAT instance, replace it with two clauses in the Double-SAT instance: (x OR y OR w OR z) and (x OR y OR w OR ¬z). This ensures that if the original clause is satisfiable, it remains satisfiable with the addition of z or ¬z.
 
+
+
 Now, we claim that the 3-SAT instance is satisfiable if and only if the constructed Double-SAT instance has at least two different satisfying assignments.
 
-Proof:
+#### Proof:
 
 - If the 3-SAT instance is satisfiable, there exists a satisfying assignment of Boolean values to the variables. We can use this assignment for the Double-SAT instance and set z to both true and false to get two different satisfying assignments. This is because adding z or ¬z to each clause will not affect the satisfiability of the clause, as it was already satisfied by the 3-SAT assignment.
 - If the Double-SAT instance has at least two different satisfying assignments, we can find a satisfying assignment for the 3-SAT instance by ignoring the variable z. Since the clauses in the Double-SAT instance were derived from the 3-SAT clauses with the addition of z or ¬z, we know that the assignment will still satisfy the original 3-SAT clauses.
