@@ -36,9 +36,9 @@ Therefore, the constructed yes-instance of Hamiltonian path can be treated as th
 
 #### Spanning tree $\Rightarrow$ Hamiltonian path:
 
-1) Just follow the constructions to expand each vertex to a k-vertex-group and create the edges between groups. 
+1) The graph just like the structure in the constructions.
 2) It will be a Hamiltonian path in G.
-   - Because if a vertex in the spanning tree has **n** edges, then the Hamiltonian path can pass the group, which represent this vertex k times. **n**<=**k**, so there is a Hamiltonian path.
+   - If a vertex in the spanning tree has **n** edges, which means the group represent this vertex is connected with other **n** groups. Because **n**<=**k** (it is a **k** low degree spanning tree), each group allow  a path to go through this group **n** times. So, there is a Hamiltonian path.( Because each vertex in the group can provide a opportunity for a path get in and get out to another group, there are just **n** other groups connected with this group. So, it is not possible that a Hamiltonian path algorithm break due to a group is unavailable)
 
 Given **G**, we can easily construct **H** in polynomial time by brute force.
 
@@ -58,7 +58,14 @@ For **G(V,E)**, let |**V**|=**n**,|**E**|=**m**.
 
 #### Algorithm
 
-```
+```python
+Find_HDST(V_list,E_list,k):
+    find largest degree vertex MDV and its degree D_MDV by V_list and E_list
+    if D_MDV<k:
+        return false
+    if BFS(V_list, E_list, root=MDV)==false:
+        return false
+    return true
 ```
 
 
@@ -67,4 +74,5 @@ For **G(V,E)**, let |**V**|=**n**,|**E**|=**m**.
 
 #### Time complexity
 
-the total cost is **O(n+m)**.
+The search cost is **O(n+m)** and the BFS cost is O(n+m), so the total cost is **O(n+m)**
+
