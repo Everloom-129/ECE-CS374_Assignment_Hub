@@ -12,24 +12,54 @@
 
 **Shitian Yang** 	**sy39**
 
-[toc]
+## 4. **Let T = {〈M〉|M is a TM that accepts $w^{R}$ whenever it accepts $w$ }  . Show that T is undecidable.**
 
-4. Let T = {〈M〉|M is a TM that accepts w R whenever it accepts w }  . Show that T is undecidable.
+For the sake of argument, suppose there is an Oracle algorithm **DecideAcceptT** that correctly decides the language T, then we can solve the halting problem as follows:
+
+```pseudocode
+DecideHALT(<M,w>):
+	Encode the following Turing machine M':
+		M'(x):
+			run M on input w
+			if M halts on input w 
+				if x = w or x = w^R:
+					return True
+				else
+					return False
+			else
+            	return False
+	if DecideAcceptT(<M'>)
+		return True
+	else
+		return False
+```
+
+​	We prove this reduction correct as follows:
+
+### $\Rightarrow$ Suppose M halts on input w.
+
+- Then M' accepts both w and w^R and rejects all other input strings.
+- Since M' accepts w^R whenever it accepts w, DecideAcceptT(<M'>) = True.
+- Thus, DecideHALT(<M,w>) = True.
+
+### $\Leftarrow$ Suppose M does not halt on input w.
+
+- Then M' never accepts any input string, as it runs M on input w indefinitely.
+- Since M' does not accept any input string, it trivially accepts w^R whenever it accepts w.
+  - TODO
+- Thus, DecideAcceptT(<M'>) = True. 
+- However, this leads to a contradiction, as it implies that DecideHALT(<M,w>) = True, even though M does not halt on input w.
+
+Since the halting problem is known to be undecidable, the existence of the Oracle algorithm DecideAcceptT leads to a contradiction.
+
+Therefore, we conclude that T is undecidable.
 
 
 
-To show that T is undecidable, we can use a reduction from the Halting Problem (HP), which is a known undecidable problem. The Halting Problem is defined as follows:
 
-Halting Problem (HP) := {<M, w> | M is a Turing machine that halts on input w}
 
-We want to show that if we could decide T, then we could decide the Halting Problem, which would lead to a contradiction since the Halting Problem is undecidable.
+## Reference:
 
-Assume that there exists a Turing machine D that decides T. Now, we will construct another Turing machine B that decides the Halting Problem using D.
-
-Given a Turing machine M and an input w, B works as follows:
-
-1. Construct a new Turing machine M' that, on any input x, performs the following steps: a. Simulate M on input w. b. If M halts on input w, then M' checks if x = wR (i.e., x is the reverse of w). If x = wR, accept the input x; otherwise, reject the input x.
-2. Run Turing machine D on the description of M' (i.e., <M'>).
-3. If D accepts <M'>, it means M' accepts wR if and only if it accepts w. Therefore, M halts on input w, and B accepts <M, w>. If D rejects <M'>, it means M' does not have the property that it accepts wR if and only if it accepts w. Therefore, M does not halt on input w, and B rejects <M, w>.
-
-The Turing machine B decides the Halting Problem using the assumed Turing machine D that decides T. However, this leads to a contradiction since the Halting Problem is undecidable. Therefore, our assumption that there exists a Turing machine D that decides T must be incorrect, and we conclude that the language T is undecidable.
+- Format is basically based on Lab21 Solution
+- [algorithm - Let T = { | M is a TM that accepts $w^R$ whenever it accepts w}. Show that T is undecidable - Stack Overflow](https://stackoverflow.com/questions/50083011/let-t-m-m-is-a-tm-that-accepts-wr-whenever-it-accepts-w-show-that-t) (Yes there was a same question, LOL)
+- 
