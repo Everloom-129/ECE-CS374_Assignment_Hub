@@ -111,24 +111,24 @@ To prove the Double-SAT is NP-hard, we can reduce the **SAT problem** to it.
 
 #### Reduction Construction
 
-Given a CNF function ***g*** then create a Boolean function **f** by adding a pair of literals  **(x $\and \ \neg$ x)**   to each clause of ***f***, where **x** is an additional variable. This reduction can work in polynomial time.
+Given a CNF function ***g*** then create a Boolean function **f** by adding a pair of literals  **(x $\or \ \neg$ x)**   to each clause of ***f***, where **x** is an additional variable. This reduction can work in polynomial time.
 
-$f = g  \or  (x \and \neg x)$
+$f = g  \and  (x \or \neg x)$
 
 Now, we claim that the SAT instance is satisfiable if and only if the constructed Double-SAT instance has at least two different satisfying assignments.
 
 #### SAT $\Rightarrow$ Double SAT
 
 - If the SAT instance ***g*** is satisfiable, there exists a satisfying assignment of Boolean values to the variables. 
-- We can use this assignment for the Double-SAT instance and set **x to both true and false** to get two different satisfying assignments, for  **(x $\and \ \neg$ x)**  won't affect the final outcome of assignment
+- We can use this assignment for the Double-SAT instance and set **x to both true and false** to get two different satisfying assignments, for  **(x $\or \neg$ x)**  won't affect the final outcome of assignment
 - On the contrary, If **g** is unsatisfiable, then some clause of **g** must be **FALSE**, and therefore, ***f*** must also be unsatisfiable.
 
-Therefore, the constructed yes-instance of 3SAT can be treated as the yes-instance of Double SAT.
+Therefore, the constructed yes-instance of SAT can be treated as the yes-instance of Double SAT.
 
 #### Double SAT  $\Rightarrow$  SAT
 
 - If the Double-SAT instance has at least two different satisfying assignments, we can find a satisfying assignment for the SAT instance by ignoring the variable x. 
-- Therefore, arbitrary yes-instance of Double SAT can be transferred into a special yes-instance of 3SAT. 
+- Therefore, arbitrary yes-instance of Double SAT can be transferred into a special yes-instance of SAT. 
 
 #### Conclusion
 

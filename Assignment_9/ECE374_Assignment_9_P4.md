@@ -1,7 +1,5 @@
 # ECE374 Assignment 8 
 
-# T4 SAT-related Problems
-
 04/14/2023
 
 ***Group & netid***

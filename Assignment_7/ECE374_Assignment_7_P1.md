@@ -77,7 +77,9 @@ print(order)
   - In each iteration of the loop, we iterate over the neighbors of the current vertex, which takes O(deg(v)) time, where deg(v) is the degree of vertex v (i.e., the number of neighbors of v). 
   - The sum of the degrees of all vertices is equal to twice the number of edges in the graph, so the total time spent iterating over neighbors is O(E).
 
- In practice, the toposort complexity may be dominated by the time spent in `create_graph` if the number of words and/or the maximum length of a word are very large.
+Here, based on the assumption of question, we know the alphabet size won't affect the O(n\*k), because the input sequence must provide enough information.  Then, the $|\sum| $, O(E), O(V) is within O(n) level complexity. 
+
+In practice, the topological sort complexity may be dominated by the time spent in `create_graph` if the number of words and/or the maximum length of a word are very large.
 
 Total time complexity is within ***O(n\*k)***
 
