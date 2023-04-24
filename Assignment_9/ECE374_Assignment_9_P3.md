@@ -12,7 +12,7 @@
 
 ## 3. Algorithmic Complexity Classes
 
-![image-20230420154202934](./ECE374_Assignment_9_P3.assets/image-20230420154202934.png)
+<img src="./ECE374_Assignment_9_P3.assets/image-20230420154202934.png" alt="image-20230420154202934" style="zoom:33%;" />
 
 ## (a) The max kite problem 
 
