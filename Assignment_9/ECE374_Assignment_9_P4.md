@@ -1,4 +1,4 @@
-# ECE374 Assignment 8 
+# ECE374 Assignment 9
 
 04/14/2023
 
@@ -10,23 +10,23 @@
 
 **Shitian Yang** 	**sy39**
 
-## 4. **Let T = {〈M〉|M is a TM that accepts $w^{R}$ whenever it accepts $w$ }  . Show that T is undecidable.**
+## 4. Decidability Problem
 
-For the sake of argument, suppose there is an Oracle algorithm **DecideAcceptT** that correctly decides the language T, then we can solve the halting problem as follows:
+>  **Let T = {〈M〉|M is a TM that accepts $w^{R}$ whenever it accepts $w$ }  . Show that T is undecidable.**
+
+For the sake of argument, suppose there is an Oracle algorithm **DecideAcceptT** that correctly decides the language T, then we can solve the **halting problem** as follows:
 
 ```pseudocode
 DecideHALT(<M,w>):
-	Encode the following Turing machine M':
-		M'(x):
+	Encode the following Turing machine M_Q:
+		M_Q(x):
 			run M on input w
-			if M halts on input w 
-				if x = w or x = w^R:
-					return True
-				else
-					return False
+			# if M halts on input w
+			if x = 01 or x = 10:
+				return True
 			else
-            	return False
-	if DecideAcceptT(<M'>)
+				return False
+	if DecideAcceptT(<M_Q>):
 		return True
 	else
 		return False
@@ -36,19 +36,19 @@ DecideHALT(<M,w>):
 
 ### $\Rightarrow$ Suppose M halts on input w.
 
-- Then M' accepts both w and w^R and rejects all other input strings.
-- Since M' accepts w^R whenever it accepts w, DecideAcceptT(<M'>) = True.
-- Thus, DecideHALT(<M,w>) = True.
+- Then M_Q accepts both 01 and 10, while rejecting all other input strings.
+- So DecideAcceptT(<M_Q>) accepts the encoding <M_Q>
+- Thus, DecideHALT(<M,w>) correctly accepts the encoding <M, w >
 
 ### $\Leftarrow$ Suppose M does not halt on input w.
 
-- Then M' never accepts any input string, as it runs M on input w indefinitely.
-- Since M' does not accept any input string, it trivially accepts w^R whenever it accepts w.
-  - TODO
-- Thus, DecideAcceptT(<M'>) = True. 
-- However, this leads to a contradiction, as it implies that DecideHALT(<M,w>) = True, even though M does not halt on input w.
+- Then M_Q diverges on *every* input string x
+- In particular, M_Q does not accept  $w^{R}$ or $w$
+  - So DecideAcceptT rejects the encoding <M_Q>
+  - So DecideHALT correctly rejects the encoding <M,w>
 
-Since the halting problem is known to be undecidable, the existence of the Oracle algorithm DecideAcceptT leads to a contradiction.
+
+In both cases, DecideHALT is correct. However, since the **halting problem is known to be undecidable,** the existence of the Oracle algorithm DecideAcceptT leads to a contradiction.
 
 Therefore, we conclude that T is undecidable.
 
@@ -59,5 +59,10 @@ Therefore, we conclude that T is undecidable.
 ## Reference:
 
 - Format is basically based on Lab21 Solution
+
 - [algorithm - Let T = { | M is a TM that accepts $w^R$ whenever it accepts w}. Show that T is undecidable - Stack Overflow](https://stackoverflow.com/questions/50083011/let-t-m-m-is-a-tm-that-accepts-wr-whenever-it-accepts-w-show-that-t) (Yes there was a same question, LOL)
-- 
+
+  
+
+
+
