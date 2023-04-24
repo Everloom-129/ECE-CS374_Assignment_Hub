@@ -23,7 +23,7 @@ To prove X is in NP, we need to show that there exists a non-deterministic algor
 ### Certifier: 
 
 - Check $ | S| \le k$, if not, reject certificate
-- Construct $G' = G - S$, removing the corresponding edges 
+- Construct $G' = G - S$, removing vertices and the corresponding edges 
 - Run topological sort on ***G'*** , see if it is a DAG. If a topological sort is possible, accept the **S**. Otherwise, reject it. 
 
 The above verification algorithm runs in polynomial time with respect to the number of vertices and edges since the topological sort can be performed in O(|V| + |E|) time. 
@@ -47,34 +47,39 @@ We will now construct an instance of the problem **X** from the given instance o
 ```mermaid
 graph LR;
 
-A["Vertex Cover Instance: (G = (V, E), k)"] --> |Construct G'| B["Problem X Instance: (G' = (V, E'), k)"]
-B --> |If G has a vertex cover V'| C[Removing V' from G' leaves a DAG]
+A{"Vertex Cover Instance: (G = (V, E), k)"} --> |Construct G'| B["Problem X Instance: (G' = (V, E'), k)"]
+A --> |If G has a vertex cover V'| C[Removing V' from G' leaves a DAG]
 subgraph Reduction
 B --> |If G'- V' is DAG| D[G has a vertex cover V']
 
-C --> E[Accept the solution for Problem X]
-C --> Reject["Otherwise reject"]
-D --> E[Accept the solution for Problem X]
+C --> E[Accept]
+C --> Reject["Reject"]
+D --> E
 
 D --> Reject
 end
+R1[reject]
+A1[accept]
+Reject -->R1
+E --> A1
 ```
 
 - **X Instance:  {G'=(V,E'), k} **
-  - Create a directed graph G' from G by replacing each undirected edge (u, v) in E with two directed edges (u, v) and (v, u). Thus, **G' = (V, E').**
+  - Create a directed graph G' from G by replacing each undirected edge (u, v) in E with two directed edges (u->v) and (v->u). Thus, **G' = (V, E').**
 
 
 
 #### Vertex cover $\Rightarrow$ X
 
 - If G has a vertex cover V', then every edge in G has at least one endpoint in V'. 
-- Consequently, in G', removing the vertices in V' and their adjacent edges will leave no directed edges between the remaining vertices, resulting in a DAG.
+- Consequently, in G', removing the vertices in V' and their adjacent edges will leave no directed edges between the remaining vertices, resulting in a trivially DAG.
 
 Therefore, the constructed yes-instance of Vertex Cover can be treated as the yes-instance of X.
 
 #### X $\Rightarrow$ Vertex cover 
 
 - if there exists a subset V' in G' such that deleting the vertices in V' and their adjacent edges leaves a DAG, then V' must cover every directed edge in G'. 
+- Suppose $|V'| \le k $ , exist G' removing it yields a DAG. Because for any cycle in V', there must also exist in vertex cover of G.
 - Since each undirected edge in G corresponds to two directed edges in G' (one in each direction), V' also covers every edge in G and is a valid vertex cover.
 
 Therefore, arbitrary yes-instance of X can be transferred into a special yes-instance of Vertex Cover. 
@@ -91,4 +96,4 @@ Since Vertex Cover is NP-complete, this reduction shows that X is NP-hard.
 
 Since X is in NP and X is NP-hard, we can draw a conclusion that X is NP-complete
 
-Q.E.D.
+Q.E.D. 
