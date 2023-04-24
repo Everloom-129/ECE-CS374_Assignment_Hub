@@ -1,4 +1,4 @@
-# ECE374 Assignment 8 
+# ECE374 Assignment 9
 
 04/20/2023
 
@@ -23,23 +23,34 @@ To show that the problem is in NP, we need to prove that there exists a polynomi
 
 Given an undirected graph G, goal g,
 
-#### Certificate: subgraph H
+#### Certificate: 
+
+- subgraph H
 
 #### Certifier: 
 
 - If $|H| \not= 2g$, reject H
 - For vertex in H:
-  - Search from the vertex with minimum degree, go through g vertices, check if it is not a tail, reject
-  - Check the left part in H, if it is a clique of size g, accept, else reject. 
+  - Search for vertex **v** with degree **1**, 
+  - Starting from neighbor of **v**, exploring through **g-1** vertices, 
+    - check if current vertex **u** is a middle part of tail
+      - Note: a middle part of tail has degree =  2
+      - If **u** is not a middle part of tail, reject
+    - Check the rest part in H,
+      -  if it is a clique of size g, accept, else reject. 
 
-Since the certifier can run in NP, the max kite problem is in NP.
+Since the certifier can run in NP, the **maxkite** problem is in NP.
 
 ### The problem is NP-hard:
-To show that the problem is NP-hard, we need to prove that an NP-complete problem can be reduced to the max kite problem in polynomial time. We will use the Clique problem as our NP-complete problem.
+Here we reduce **maxkite** problem to the Clique problem, to prove  it is NP-hard
 
-Clique Problem: Given a graph G and a goal k, does G contain a clique of size k?
+> Clique Problem: Given a undirected graph G and a goal k, does G contain a clique of size k?
 
-Reduction: Given an instance of the Clique problem (G, k), we can create an instance of the max kite problem (G', g) as follows:
+#### Reduction: 
+Given a **YES instance of the Clique problem (G, k),** 
+
+we can create a YES instance of the max kite problem (G', g) as follows:
+
 - Set G' = G (i.e., use the same graph G for G').
 - Set g = k.
 
@@ -103,8 +114,4 @@ function isConnectedToClique(T, S, G):
 
 Since the algorithm runs in polynomial time, the 4kite problem belongs to the complexity class P.
 
-
-## Reference:
-
-[(101条消息) 【算法期末作业】课本8.19 kite问题的NP完全问题证明_wenyq7的博客-CSDN博客](https://blog.csdn.net/qq_37333947/article/details/74937933)
 
