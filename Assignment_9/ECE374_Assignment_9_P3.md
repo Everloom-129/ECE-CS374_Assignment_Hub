@@ -49,20 +49,40 @@ Here we reduce **maxkite** problem to the Clique problem, to prove  it is NP-har
 #### Reduction: 
 Given a **YES instance of the Clique problem (G, k),** 
 
-we can create a YES instance of the max kite problem (G', g) as follows:
+we can create **a YES instance of the max kite problem (G', g)** as follows:
 
-- Set G' = G (i.e., use the same graph G for G').
+- Set G' =  for each vertices v in G, **add a tail of k new vertices**
 - Set g = k.
+
+<img src="./ECE374_Assignment_9_P3.assets/image-20230423233503689.png" alt="image-20230423233503689" style="zoom:33%;" />
 
 Now, we need to show that this reduction is correct, i.e., G has a clique of size k if and only if G' has a kite of size 2g.
 
-If G has a clique of size k, then G' has a clique of size g. By adding an isolated path of length g to G', we can form a kite of size 2g in G'. Thus, if G has a clique of size k, G' has a kite of size 2g.
+#### $Clique \Rightarrow MaxKite$
 
-If G' has a kite of size 2g, then it has a clique of size g in G' and a tail of length g. Since G' = G, G has a clique of size k. Thus, if G' has a kite of size 2g, G has a clique of size k.
+- If G has a clique of size k, then G' has a clique of size g and |V| tails of size g. 
+
+- By adding multiple isolated paths of length g to G', we can always form a kite of size 2g in G'. 
+- Thus, if G has a clique of size k, G' has a kite of size 2g.\
+
+Therefore, the constructed yes-instance of Clique can be treated as the yes-instance of MaxKite.
+
+#### $MaxKite \Rightarrow Clique $
+
+- If G' has a kite of size 2g, then it at least exists a clique of size g in G' and a tail of length g. 
+
+- Since all the left parts in G' - G are tails, which can't be a max clique in G', 
+- Then the size g clique in G' is exactly the max clique in G. 
+
+Therefore, arbitrary yes-instance of MaxKite **(G', g)** can be transformed into a special yes-instance of Clique **(G, g)**, 
+
+in which **G = G - length_g_tail**.
 
 Since we can reduce the Clique problem (an NP-complete problem) to the max kite problem in polynomial time, the max kite problem is NP-hard.
 
-Combining the facts that the max kite problem is in NP and is NP-hard, we can conclude that the max kite problem is NP-complete.
+### Conclusion
+
+Combining the facts that the max kite problem is in NP and is NP-hard, we can conclude that the it is NP-complete.
 
 
 
@@ -106,12 +126,11 @@ function isConnectedToClique(T, S, G):
 
 ```
 
-1. Enumerate all possible subsets of 4 vertices from the graph G. For each subset, check if the vertices form a clique of size 4. This can be done in polynomial time, as there are O(n^4) subsets to check, and for each subset, it takes O($4^2$) time to check if it forms a clique.
+1. Enumerate all possible subsets of 4 vertices from the graph G. For each subset, check if the vertices form a clique of size 4. This can be done in polynomial time, as there are O($n^4$) subsets to check, and for each subset, it takes O($4^2$) time to check if it forms a clique.
 
 2. If a clique of size 4 is found, enumerate all possible subsets of 4 vertices outside the clique. For each subset, check if the vertices form a path of length 4. This can also be done in polynomial time, as there are O($n^4$) subsets to check, and for each subset, it takes O(4) time to check if it forms a path of length 4.
 
 3. If a clique of size 4 and a path of length 4 are found, check if the path is connected to one of the vertices in the clique. If such a connection exists, then the graph G contains a 4kite, and the algorithm returns True. Otherwise, the algorithm returns False.
 
 Since the algorithm runs in polynomial time, the 4kite problem belongs to the complexity class P.
-
 
